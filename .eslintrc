@@ -20,5 +20,8 @@
 	},
 	"rules": {
 		"no-mixed-spaces-and-tabs": "off"
+	},
+	"env": {
+		"node": true
 	}
 }
