@@ -2,7 +2,7 @@ import https from "https";
 
 import { API } from "./api/methods.js";
 
-import { Options } from "./types/AnyPay";
+import { IAnyPayOptions } from "./types/AnyPay";
 
 const defaultOptions = {
 	apiUrl: "https://anypay.io/api",
@@ -13,12 +13,12 @@ const defaultOptions = {
 };
 
 class AnyPay {
-	public options: Options;
+	public options: IAnyPayOptions;
 	public apiUrl: string;
 	public agent: https.Agent | null;
 	public api: API;
 
-	constructor(params: Options) {
+	constructor(params: IAnyPayOptions) {
 		this.options = { ...params };
 		this.apiUrl = defaultOptions.apiUrl;
 		this.agent = defaultOptions.agent;
@@ -33,7 +33,7 @@ class AnyPay {
 	 *
 	 * @param {Transfer data} options
 	 */
-	public setOptions(options: Options): AnyPay {
+	public setOptions(options: IAnyPayOptions): AnyPay {
 		Object.assign(this.options, options);
 		return this;
 	}
