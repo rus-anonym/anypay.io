@@ -2,7 +2,7 @@ import { IServerOptions, THttpMethod } from "./../../types/server";
 import express from "express";
 import ip from "ip";
 
-import APIError from "../error/apiError";
+import ModuleError from "../error/moduleError";
 
 const app = express();
 
@@ -37,7 +37,7 @@ function createServer(params: IServerOptions): void {
 
 	const urlencodedParser = express.urlencoded({ extended: false });
 	if (methods.length === 0) {
-		throw new APIError(
+		throw new ModuleError(
 			`Specify at least one method for the handler in the array.`,
 		);
 	}
@@ -68,7 +68,7 @@ function createServer(params: IServerOptions): void {
 		}
 	});
 	app.on("error", (err) => {
-		throw new APIError(`Error:\n${err}`);
+		throw new ModuleError(`Error:\n${err}`);
 	});
 }
 
