@@ -6,6 +6,7 @@ import https from "https";
 import { AnyPay } from "..";
 import utils from "./utils";
 import APIError from "./error/apiError";
+import ModuleError from "./error/moduleError";
 
 import { IAnyPayOptions } from "../types/AnyPay";
 import IRatesResponse from "../types/methods/rates";
@@ -23,11 +24,11 @@ class API {
 		this.options = this.anypay.options;
 
 		if (!this.options.apiId) {
-			throw new APIError(`Invalid apiId`);
+			throw new ModuleError(`Invalid apiId`);
 		} else if (!this.options.apiKey) {
-			throw new APIError(`Invalid apiKey`);
+			throw new ModuleError(`Invalid apiKey`);
 		} else if (!this.options.secretKey) {
-			throw new APIError(`Invalid secretKey`);
+			throw new ModuleError(`Invalid secretKey`);
 		}
 	}
 
@@ -60,15 +61,25 @@ class API {
 		},
 	): Promise<any> {
 		try {
-			return (
-				await axios({
-					url: `${this.apiUrl}/${method}/${this.options.apiId}`,
-					headers,
-					params,
-				})
-			).data;
+			const response = await axios({
+				url: `${this.apiUrl}/${method}/${this.options.apiId}`,
+				headers,
+				params,
+			});
+
+			if (response.data.result) {
+				return response.data.result;
+			}
+
+			if (response.data.error) {
+				throw new APIError(
+					response.data.error.message,
+					Number(response.data.error.code),
+				);
+			}
+			throw new ModuleError("Unknown error");
 		} catch (error) {
-			throw new APIError(error.message);
+			throw new ModuleError(error.message);
 		}
 	}
 }
