@@ -1,6 +1,6 @@
 import https from "https";
 
-import { API } from "./api/methods.js";
+import { API } from "./api";
 
 import { IAnyPayOptions } from "./types/AnyPay";
 
@@ -15,18 +15,13 @@ const defaultOptions = {
 class AnyPay {
 	public options: IAnyPayOptions;
 	public apiUrl: string;
-	public agent: https.Agent | null;
+	public agent: https.Agent;
 	public api: API;
 
 	constructor(params: IAnyPayOptions) {
 		this.options = { ...params };
 		this.apiUrl = defaultOptions.apiUrl;
 		this.agent = defaultOptions.agent;
-
-		if (this.apiUrl.startsWith("http://")) {
-			this.agent = null;
-		}
-
 		this.api = new API(this);
 	}
 	/**
