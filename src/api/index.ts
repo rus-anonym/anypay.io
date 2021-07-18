@@ -19,6 +19,10 @@ import {
 	IPaymentsParams,
 	IPaymentsResponse,
 } from "./../types/methods/payments";
+import {
+	ICreatePayoutParams,
+	ICreatePayoutResponse,
+} from "./../types/methods/createPayout";
 
 class API {
 	private anypay: AnyPay;
@@ -91,6 +95,19 @@ class API {
 		const response = await this.call("ip-notification", {
 			sign: utils.generateHash(
 				`ip-notification${this.options.apiId}${this.options.apiKey}`,
+				"sha256",
+			),
+		});
+		return response.result;
+	}
+
+	public async createPayout(
+		params: ICreatePayoutParams,
+	): Promise<ICreatePayoutResponse> {
+		const response = await this.call("create-payout", {
+			...params,
+			sign: utils.generateHash(
+				`create-payout${this.options.apiId}${params.payout_id}${params.payout_type}${params.amount}${params.wallet}${this.options.apiKey}`,
 				"sha256",
 			),
 		});
