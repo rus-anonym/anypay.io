@@ -12,13 +12,13 @@
 		"lint": "eslint ./src"
 	},
 	"dependencies": {
+		"axios": "^0.21.1",
 		"debug": "^4.1.1",
 		"express": "^4.17.1",
 		"form-data": "^3.0.0",
 		"ip": "^1.1.5",
 		"md5": "^2.2.1",
 		"middleware-io": "^2.1.0",
-		"node-fetch": "^2.6.0",
 		"sha256": "^0.2.0"
 	},
 	"deprecated": false,
