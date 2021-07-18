@@ -8,6 +8,7 @@ import utils from "./utils";
 import APIError from "./error/apiError";
 
 import { IAnyPayOptions } from "../types/AnyPay";
+import IRatesResponse from "../types/methods/rates";
 
 class API {
 	private anypay: AnyPay;
@@ -38,6 +39,16 @@ class API {
 			),
 		});
 		return Number(response.result.balance);
+	}
+
+	public async getRates(): Promise<IRatesResponse> {
+		const response = await this.call("rates", {
+			sign: utils.generateHash(
+				`rates${this.options.apiId}${this.options.apiKey}`,
+				"sha256",
+			),
+		});
+		return response.result;
 	}
 
 	public async call(
