@@ -1,4 +1,5 @@
 import https from "https";
+import utils from "./api/utils";
 
 import { API } from "./api";
 
@@ -34,4 +35,4 @@ class AnyPay {
 	}
 }
 
-export { AnyPay };
+export { AnyPay, utils };
