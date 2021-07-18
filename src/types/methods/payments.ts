@@ -1,5 +1,5 @@
 export interface IPaymentsParams {
-	project_id: number;
+	project_id?: number;
 	trans_id?: number;
 	pay_id?: number;
 	offset?: number;

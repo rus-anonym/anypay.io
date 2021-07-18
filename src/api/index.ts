@@ -74,8 +74,9 @@ class API {
 	}
 
 	public async getCommissions(
-		params: ICommissionsParams,
+		params: ICommissionsParams = {},
 	): Promise<ICommissionsResponse> {
+		params.project_id = params.project_id || this.options.projectId;
 		const response = await this.call({
 			method: "commissions",
 			params: {
@@ -90,8 +91,9 @@ class API {
 	}
 
 	public async getPayments(
-		params: IPaymentsParams,
+		params: IPaymentsParams = {},
 	): Promise<IPaymentsResponse> {
+		params.project_id = params.project_id || this.options.projectId;
 		const response = await this.call({
 			method: "payments",
 			params: {
@@ -136,6 +138,7 @@ class API {
 
 	public createPaymentLink(params: ICreatePaymentLinkParams): string {
 		const url = `https://anypay.io/merchant?`;
+		params.merchant_id = params.merchant_id || this.options.projectId;
 		const queryString = querystring.stringify({
 			...params,
 			sign: utils.generateHash(

@@ -1,5 +1,5 @@
 export interface ICommissionsParams {
-	project_id: number;
+	project_id?: number;
 }
 
 export interface ICommissionsResponse {

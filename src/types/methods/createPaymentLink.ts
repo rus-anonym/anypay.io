@@ -28,7 +28,7 @@ type PaymentMethod =
 	| string;
 
 export default interface ICreatePaymentLinkParams {
-	merchant_id: number;
+	merchant_id?: number;
 	pay_id: number;
 	amount: number;
 	currency: PaymentCurrency;
