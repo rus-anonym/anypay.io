@@ -6,6 +6,7 @@ import { API } from "./api";
 import { IAnyPayOptions } from "./types/AnyPay";
 
 const defaultOptions = {
+	merchantUrl: `https://anypay.io/merchant`,
 	apiUrl: "https://anypay.io/api",
 	agent: new https.Agent({
 		keepAlive: true,
@@ -16,13 +17,15 @@ const defaultOptions = {
 class AnyPay {
 	public options: IAnyPayOptions;
 	public apiUrl: string;
+	public merchantUrl: string;
 	public agent: https.Agent;
 	public api: API;
 
 	constructor(params: IAnyPayOptions) {
 		this.options = { ...params };
-		this.apiUrl = defaultOptions.apiUrl;
-		this.agent = defaultOptions.agent;
+		this.apiUrl = params.apiUrl || defaultOptions.apiUrl;
+		this.merchantUrl = params.merchantUrl || defaultOptions.merchantUrl;
+		this.agent = params.httpsAgent || defaultOptions.agent;
 		this.api = new API(this);
 	}
 	/**

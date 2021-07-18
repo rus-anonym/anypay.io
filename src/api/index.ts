@@ -137,7 +137,7 @@ class API {
 	}
 
 	public createPaymentLink(params: ICreatePaymentLinkParams): string {
-		const url = `https://anypay.io/merchant?`;
+		const url = this.anypay.merchantUrl + "?";
 		params.merchant_id = params.merchant_id || this.options.projectId;
 		const queryString = querystring.stringify({
 			...params,
@@ -166,6 +166,7 @@ class API {
 			url,
 			headers,
 			params,
+			httpsAgent: this.agent,
 		}).catch((error) => {
 			throw new ModuleError(error.message);
 		});
