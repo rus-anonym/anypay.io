@@ -1,9 +1,11 @@
 class APIError extends Error {
-	constructor(message: string) {
+	public code;
+	constructor(message: string, code: number) {
 		super(message);
 
-		this.message = message;
 		this.name = "APIError";
+		this.message = message;
+		this.code = code;
 
 		Error.captureStackTrace(this);
 	}
