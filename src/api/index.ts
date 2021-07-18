@@ -10,6 +10,10 @@ import ModuleError from "./error/moduleError";
 
 import { IAnyPayOptions } from "../types/AnyPay";
 import IRatesResponse from "../types/methods/rates";
+import {
+	ICommissionsParams,
+	ICommissionsResponse,
+} from "../types/methods/commissions";
 
 class API {
 	private anypay: AnyPay;
@@ -46,6 +50,19 @@ class API {
 		const response = await this.call("rates", {
 			sign: utils.generateHash(
 				`rates${this.options.apiId}${this.options.apiKey}`,
+				"sha256",
+			),
+		});
+		return response.result;
+	}
+
+	public async getCommissions(
+		params: ICommissionsParams,
+	): Promise<ICommissionsResponse> {
+		const response = await this.call("commissions", {
+			...params,
+			sign: utils.generateHash(
+				`commissions${this.options.apiId}${params.project_id}${this.options.apiKey}`,
 				"sha256",
 			),
 		});
