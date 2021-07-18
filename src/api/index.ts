@@ -60,27 +60,25 @@ class API {
 			"Content-Type": "application/x-www-form-urlencoded",
 		},
 	): Promise<any> {
-		try {
-			const response = await axios({
-				url: `${this.apiUrl}/${method}/${this.options.apiId}`,
-				headers,
-				params,
-			});
-
-			if (response.data.result) {
-				return response.data.result;
-			}
-
-			if (response.data.error) {
-				throw new APIError(
-					response.data.error.message,
-					Number(response.data.error.code),
-				);
-			}
-			throw new ModuleError("Unknown error");
-		} catch (error) {
+		const response = await axios({
+			url: `${this.apiUrl}/${method}/${this.options.apiId}`,
+			headers,
+			params,
+		}).catch((error) => {
 			throw new ModuleError(error.message);
+		});
+
+		if (response.data.result) {
+			return response.data;
 		}
+
+		if (response.data.error) {
+			throw new APIError(
+				response.data.error.message,
+				Number(response.data.error.code),
+			);
+		}
+		throw new ModuleError("Unknown error");
 	}
 }
 
