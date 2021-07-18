@@ -14,6 +14,10 @@ import {
 	ICommissionsParams,
 	ICommissionsResponse,
 } from "../types/methods/commissions";
+import {
+	IPaymentsParams,
+	IPaymentsResponse,
+} from "./../types/methods/payments";
 
 class API {
 	private anypay: AnyPay;
@@ -63,6 +67,19 @@ class API {
 			...params,
 			sign: utils.generateHash(
 				`commissions${this.options.apiId}${params.project_id}${this.options.apiKey}`,
+				"sha256",
+			),
+		});
+		return response.result;
+	}
+
+	public async getPayments(
+		params: IPaymentsParams,
+	): Promise<IPaymentsResponse> {
+		const response = await this.call("payments", {
+			...params,
+			sign: utils.generateHash(
+				`payments${this.options.apiId}${params.project_id}${this.options.apiKey}`,
 				"sha256",
 			),
 		});
