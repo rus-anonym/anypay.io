@@ -4,6 +4,7 @@ import axios from "axios";
 import https from "https";
 
 import { AnyPay } from "..";
+import utils from "./utils";
 import APIError from "./error/apiError";
 
 import { IAnyPayOptions } from "../types/AnyPay";
@@ -27,6 +28,16 @@ class API {
 		} else if (!this.options.secretKey) {
 			throw new APIError(`Invalid secretKey`);
 		}
+	}
+
+	public async getBalance(): Promise<number> {
+		const response = await this.call("balance", {
+			sign: utils.generateHash(
+				`balance${this.options.apiId}${this.options.apiKey}`,
+				"sha256",
+			),
+		});
+		return Number(response.result.balance);
 	}
 
 	public async call(
