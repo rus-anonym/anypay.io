@@ -10,6 +10,7 @@ import ModuleError from "./error/moduleError";
 
 import { IAnyPayOptions } from "../types/AnyPay";
 import IRatesResponse from "../types/methods/rates";
+import INotifyIPResponse from "../types/methods/notifyIP";
 import {
 	ICommissionsParams,
 	ICommissionsResponse,
@@ -80,6 +81,16 @@ class API {
 			...params,
 			sign: utils.generateHash(
 				`payments${this.options.apiId}${params.project_id}${this.options.apiKey}`,
+				"sha256",
+			),
+		});
+		return response.result;
+	}
+
+	public async getServiceIP(): Promise<INotifyIPResponse> {
+		const response = await this.call("ip-notification", {
+			sign: utils.generateHash(
+				`ip-notification${this.options.apiId}${this.options.apiKey}`,
 				"sha256",
 			),
 		});
