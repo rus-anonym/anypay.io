@@ -11,7 +11,8 @@ type PaymentStatus =
 	| "refund"
 	| "canceled"
 	| "expired"
-	| "error";
+	| "error"
+	| string;
 
 interface IPayment {
 	transaction_id: number;
